@@ -12,19 +12,21 @@ import java.net.http.HttpResponse;
 public class ConsumoAPI {
 
     public String obtenerDatos(String url) {
-        HttpClient client = HttpClient.newHttpClient();
+        HttpClient client = HttpClient.newBuilder()
+                .followRedirects(HttpClient.Redirect.ALWAYS)  // <- aquí le dices que siga redirecciones
+                .build();
+
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .build();
+
         HttpResponse<String> response = null;
         try {
-            response = client
-                    .send(request, HttpResponse.BodyHandlers.ofString());
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (InterruptedException | IOException e) {
             throw new RuntimeException(e);
         }
 
-        String json = response.body(); //se crea una variable json que almacena el cuerpo de la respuesta HTTP como un String
-        return json; //el método devuelve el String json
+        return response.body();
     }
 }

@@ -1,6 +1,9 @@
 package com.aluracursos.Challenge.Spring.Boot.LiterAlura.model;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-public record DatosRespuesta(List<DatosLibro> results) {
+import java.util.List;
+@JsonIgnoreProperties(ignoreUnknown = true)
+
+public record DatosRespuesta(int count, List<DatosLibro> results) {
 }

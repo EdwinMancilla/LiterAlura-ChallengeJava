@@ -20,24 +20,25 @@ public class Libros {
     @JoinColumn(name = "autor_id")
     private Autor autor;
     private String idioma;
-    private Double NumeroDeDescargas;
+    private Double numeroDeDescargas;
 
     // Constructor por defecto para JPA
     public Libros() {
 
     }
 
-    public Libros (DatosLibro datosLibro){
+    public Libros(DatosLibro datosLibro){
         this.titulo = datosLibro.titulo();
-        if(datosLibro.autores() != null && !datosLibro.autores().isEmpty()){
-            this.autor = new DatosAutor(datosLibro.autores().get(0));
-        }else {
+
+        if (datosLibro.autores() != null && !datosLibro.autores().isEmpty()) {
+            DatosAutor datosAutor = datosLibro.autores().get(0);
+            this.autor = new Autor(datosAutor.nombre(), datosAutor.anoNacimiento(), datosAutor.anoFallecimiento());
+        } else {
             this.autor = null;
         }
-        this.idioma = datosLibro.idiomas();
-        this.NumeroDeDescargas = datosLibro.numeroDeDescargas();
 
-
+        this.idioma = datosLibro.idiomas().isEmpty() ? "Desconocido" : datosLibro.idiomas().get(0);
+        this.numeroDeDescargas= (double) datosLibro.numeroDeDescargas();
     }
 
     // Getters and Setters
@@ -76,11 +77,11 @@ public class Libros {
     }
 
     public Double getNumeroDeDescargas() {
-        return NumeroDeDescargas;
+        return numeroDeDescargas;
     }
 
     public void setNumeroDeDescargas(Double numeroDeDescargas) {
-        NumeroDeDescargas = numeroDeDescargas;
+        this.numeroDeDescargas= numeroDeDescargas;
     }
 
     @Override
@@ -89,7 +90,7 @@ public class Libros {
                 "titulo='" + titulo + '\'' +
                 ", autor='" + autor + '\'' +
                 ", idioma='" + idioma + '\'' +
-                ", NumeroDeDescargas=" + NumeroDeDescargas +
+                ", NumeroDeDescargas=" + numeroDeDescargas +
                 '}';
     }
 }

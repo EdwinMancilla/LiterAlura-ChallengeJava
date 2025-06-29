@@ -19,11 +19,11 @@ public class LibrosService {
     }
 
     public List<Libros> listarLibrosPorIdioma(String idioma){
-        return libroRepository.findByIdioma(idioma);
+        return libroRepository.findByIdiomaContaining(idioma);
     }
 
     public Libros crearLibro(Libros libro){
-        return libroRepository.saveAll(libro);
+        return libroRepository.save(libro);
     }
 
     public Optional<Libros> obtenerLIbroPorId(Long id){

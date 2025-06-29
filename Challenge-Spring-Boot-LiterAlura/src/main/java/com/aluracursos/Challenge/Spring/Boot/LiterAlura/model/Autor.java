@@ -13,11 +13,23 @@ public class Autor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private int anoNacimiento;
+    @Column(nullable = true)
+    private Integer anoNacimiento;
+    @Column(nullable = true)
     private Integer anoFallecimiento;
 
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Libros> libros;
+
+    //constructor por defecto
+    public Autor() {
+    }
+
+    public Autor(String nombre, Integer anoNacimiento, Integer anoFallecimiento) {
+        this.nombre = nombre;
+        this.anoNacimiento = anoNacimiento;
+        this.anoFallecimiento = anoFallecimiento;
+    }
 
     //getters y setters
 
@@ -37,11 +49,11 @@ public class Autor {
         this.nombre = nombre;
     }
 
-    public int getAnoNacimiento() {
+    public Integer getAnoNacimiento() {
         return anoNacimiento;
     }
 
-    public void setAnoNacimiento(int anoNacimiento) {
+    public void setAnoNacimiento(Integer anoNacimiento) {
         this.anoNacimiento = anoNacimiento;
     }
 
